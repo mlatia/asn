@@ -5,8 +5,12 @@ import { Button } from "@/components/ui/button"
 export function Header() {
   return (
     <header className="flex h-16 items-center justify-end gap-4 border-b bg-white px-4 dark:bg-gray-950 md:px-6">
-      <Button variant="ghost" size="icon" className="rounded-full">
-        <Bell className="h-5 w-5" />
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full border border-gray-200 p-4 bg-transparent"
+      >
+        <Bell className="h-5 w-5 text-[#3D607B]" fill="#3D607B" stroke="#3D607B" />
         <span className="sr-only">Toggle notifications</span>
       </Button>
       <div className="flex items-center gap-2">

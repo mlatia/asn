@@ -12,9 +12,9 @@ export default function QuizPage() {
     <QuizProvider>
       <div className="flex min-h-screen bg-[#F3F7FC] dark:bg-gray-950">
         <Sidebar />
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1 min-h-screen">
           <Header />
-          <div className="flex flex-col md:flex-row flex-1 p-4 gap-4 items-start md:items-start">
+          <div className="flex flex-col md:flex-row flex-1 p-4 gap-4 min-h-0">
             <QuizMain />
             <QuizPanel />
           </div>

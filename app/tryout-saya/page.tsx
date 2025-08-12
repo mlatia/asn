@@ -57,7 +57,7 @@ export default function TryoutSayaPage() {
                     {tryout.status}
                   </Badge>
                 </CardHeader>
-                <CardContent className="space-y-2 text-sm text-primary-dark">
+                <CardContent className="space-y-2 text-sm text-primary-dark ">
                   {" "}
                   <p>
                     <span className="font-medium">Waktu Submit:</span> {tryout.submittedAt}
