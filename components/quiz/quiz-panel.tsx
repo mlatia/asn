@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useQuiz } from "@/context/quiz-context"
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export function QuizPanel() {
   const {
@@ -22,6 +22,16 @@ export function QuizPanel() {
   } = useQuiz()
 
   const [openList, setOpenList] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768) 
+    }
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   const getQuestionStatusClass = (questionId: number) => {
     const isCurrent = questionId - 1 === currentQuestionIndex
@@ -68,11 +78,11 @@ export function QuizPanel() {
           {openList ? (
             <ChevronUp className="w-5 h-5 text-primary-dark md:hidden" />
           ) : (
-            <ChevronDown className="w-5 h-5 text-primary-dark  md:hidden" />
+            <ChevronDown className="w-5 h-5 text-primary-dark md:hidden" />
           )}
         </button>
 
-        {openList && (
+        {(openList || isDesktop) && (
           <div className="px-6 pb-6 overflow-y-auto quiz-content-scroll max-h-screen">
             <div className="grid grid-cols-5 gap-3">
               {Array.from({ length: totalQuestions }, (_, i) => (
