@@ -14,7 +14,7 @@ export default function QuizPage() {
         <Sidebar />
         <div className="flex flex-col flex-1 min-h-screen">
           <Header />
-          <div className="flex flex-col md:flex-row flex-1 p-4 gap-4 min-h-0">
+          <div className="flex flex-col-reverse md:flex-row flex-1 p-4 gap-4 min-h-0 ">
             <QuizMain />
             <QuizPanel />
           </div>

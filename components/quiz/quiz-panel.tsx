@@ -1,11 +1,12 @@
 "use client"
 
-import { Clock } from "lucide-react"
+import { Clock, ChevronDown, ChevronUp } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useQuiz } from "@/context/quiz-context"
-import Image from "next/image";
+import Image from "next/image"
+import { useState } from "react"
 
 export function QuizPanel() {
   const {
@@ -19,6 +20,8 @@ export function QuizPanel() {
     finishQuiz,
     quizFinished,
   } = useQuiz()
+
+  const [openList, setOpenList] = useState(false)
 
   const getQuestionStatusClass = (questionId: number) => {
     const isCurrent = questionId - 1 === currentQuestionIndex
@@ -39,7 +42,7 @@ export function QuizPanel() {
         <div className="p-6">
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-2 text-2xl font-bold text-primary-blue">
-              <Image src="/timer.png" alt="Clock" width={24} height={24} className="h-6 w-6"/>
+              <Image src="/timer.png" alt="Clock" width={24} height={24} className="h-6 w-6" />
               <span>{formattedTime}</span>
             </div>
             <div className="w-full text-sm text-[#4D4D4B] dark:text-gray-400">
@@ -57,31 +60,48 @@ export function QuizPanel() {
       </div>
 
       <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg flex-1">
-        <div className="px-6 py-6 overflow-y-auto quiz-content-scroll max-h-screen">
-          <h3 className="text-lg font-semibold mb-4 text-primary-dark sticky top-0 bg-white dark:bg-gray-800 z-10">Daftar Soal</h3>
-          <div className="grid grid-cols-5 gap-3">
-            {Array.from({ length: totalQuestions }, (_, i) => (
-              <Button
-                key={i + 1}
-                variant="outline"
-                size="icon"
-                onClick={() => goToQuestion(i)}
-                disabled={quizFinished}
-                className={cn("h-10 w-10 rounded-md text-sm font-medium border", getQuestionStatusClass(i + 1))}
-              >
-                {i + 1}
-              </Button>
-            ))}
-          </div>
-        </div>
-      </div>
-        <Button
-          onClick={finishQuiz}
-          disabled={quizFinished}
-          className="w-full rounded-full py-2 text-primary-blue bg-white border border-primary-blue hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-blue"
+        <button
+          className="w-full flex justify-between items-center px-6 py-4 text-lg font-semibold text-primary-dark focus:outline-none"
+          onClick={() => setOpenList(!openList)}
         >
-          Selesai
-        </Button>
+          Daftar Soal
+          {openList ? (
+            <ChevronUp className="w-5 h-5 text-primary-dark md:hidden" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-primary-dark  md:hidden" />
+          )}
+        </button>
+
+        {openList && (
+          <div className="px-6 pb-6 overflow-y-auto quiz-content-scroll max-h-screen">
+            <div className="grid grid-cols-5 gap-3">
+              {Array.from({ length: totalQuestions }, (_, i) => (
+                <Button
+                  key={i + 1}
+                  variant="outline"
+                  size="icon"
+                  onClick={() => goToQuestion(i)}
+                  disabled={quizFinished}
+                  className={cn(
+                    "h-10 w-10 rounded-md text-sm font-medium border",
+                    getQuestionStatusClass(i + 1)
+                  )}
+                >
+                  {i + 1}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <Button
+        onClick={finishQuiz}
+        disabled={quizFinished}
+        className="hidden md:block w-full rounded-full py-2 text-primary-blue bg-white border border-primary-blue hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-blue"
+      >
+        Selesai
+      </Button>
     </aside>
   )
 }

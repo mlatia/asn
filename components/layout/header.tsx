@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 
 export function Header() {
   return (
-    <header className="flex h-16 items-center justify-end gap-4 border-b bg-white px-4 dark:bg-gray-950 md:px-6">
+    <header className="sticky top-0 z-40 flex h-16 items-center justify-end gap-4 border-b bg-white px-4 dark:bg-gray-950 md:px-6">
       <Button
         variant="ghost"
         size="icon"
